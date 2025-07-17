@@ -11,7 +11,7 @@ const PageContainer = ({
 	return (
 		<div
 			className={cn(
-				`min-h-screen w-full font-[family-name:var(--font-inter)] text-foreground px-6`,
+				`min-h-screen w-full font-[family-name:var(--font-inter)] text-foreground p-6`,
 				className
 			)}
 		>

@@ -17,7 +17,8 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={`${inter.variable} antialiased dark bg-background w-full`}
+				id="private-body"
+				className={`${inter.variable} antialiased dark bg-background w-full overflow-x-hidden`}
 			>
 				<SidebarProvider>
 					<AppSidebar />

@@ -6,17 +6,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { formatCurrency } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 const BudgetCard = ({ leftToSpend = 0 }: { leftToSpend: number }) => {
-	function formatToTwoDecimals(amount: number): string {
-		return amount.toFixed(2);
-	}
-
 	return (
-		<Card className="">
+		<Card>
 			<CardHeader>
 				<CardTitle className="text-base">Budget</CardTitle>
 				<CardAction>
@@ -28,11 +25,9 @@ const BudgetCard = ({ leftToSpend = 0 }: { leftToSpend: number }) => {
 				</CardAction>
 			</CardHeader>
 			<CardContent className="space-y-6">
-				<div className="w-full space-y-3">
-					<h2 className="text-sm text-card-foreground/75">Left to Spend</h2>
-					<p className="text-xl font-bold">
-						${formatToTwoDecimals(leftToSpend)}
-					</p>
+				<div className="w-full space-y-3 text-sm">
+					<h2 className="text-card-foreground/75">Left to Spend</h2>
+					<p className="text-3xl font-bold">{formatCurrency(leftToSpend)}</p>
 					<div className="w-full h-3 bg-accent rounded-full overflow-hidden">
 						<div className="h-full w-6/12 bg-primary rounded-full"></div>
 					</div>
@@ -47,11 +42,11 @@ const BudgetCard = ({ leftToSpend = 0 }: { leftToSpend: number }) => {
 							.map((_, i) => (
 								<div
 									key={i}
-									className="min-w-[120px] flex flex-col justify-center items-center gap-2 shrink-0"
+									className="min-w-[120px] flex flex-col justify-center items-center gap-2 shrink-0 text-sm"
 								>
 									<div className="size-20 bg-accent rounded-full"></div>
-									<p className="text-sm text-card-foreground/75">Restaurant</p>
-									<p className="text-base">$0.00 left</p>
+									<p className="text-card-foreground/75">Restaurant</p>
+									<p>{formatCurrency(1)}</p>
 								</div>
 							))}
 					</div>

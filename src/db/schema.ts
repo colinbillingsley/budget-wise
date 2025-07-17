@@ -1,4 +1,20 @@
-import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import {
+	pgTable,
+	text,
+	timestamp,
+	boolean,
+	decimal,
+	pgEnum,
+} from "drizzle-orm/pg-core";
+
+export const typeEnum = pgEnum("type", ["EXPENSE", "INCOME"]);
+export const statusEnum = pgEnum("status", ["PENDING", "PAID"]);
+export const frequencyEnum = pgEnum("frequency", [
+	"DAILY",
+	"WEEKLY",
+	"MONTHLY",
+	"YEARLY",
+]);
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
@@ -60,4 +76,77 @@ export const verification = pgTable("verification", {
 	),
 });
 
-export const schema = { user, account, session, verification };
+export const budgets = pgTable("budgets", {
+	id: text("id").primaryKey(),
+	title: text("title").notNull(),
+	amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+	periodStart: timestamp("period_start").notNull(),
+	periodEnd: timestamp("period_end").notNull(),
+
+	ownerId: text("owner_id")
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
+	categoryId: text("category_id")
+		.notNull()
+		.references(() => categories.id, { onDelete: "cascade" }),
+
+	createdAt: timestamp("created_at").defaultNow().notNull(),
+	updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const categories = pgTable("expense_categories", {
+	id: text("id").primaryKey(),
+	name: text("name").notNull(),
+	icon: text("icon"), // optional
+	color: text("color"), // optional
+	createdByUserId: text("created_by_user_id"), // null = default system category
+});
+
+export const transactions = pgTable("transactions", {
+	id: text("id").primaryKey(),
+	title: text("title").notNull(),
+	type: typeEnum("type").default("EXPENSE"),
+	status: statusEnum("status").default("PAID"),
+	amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+	transactionDate: timestamp("transaction_date").defaultNow().notNull(),
+	description: text("description"),
+	isRecurring: boolean("is_recurring").default(false),
+
+	ownerId: text("owner_id")
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
+	recurringTransactionId: text("recurring_transaction_id").references(
+		() => recurringTransaction.id,
+		{ onDelete: "set null" }
+	),
+
+	createdAt: timestamp("created_at").defaultNow().notNull(),
+	updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const recurringTransaction = pgTable("recurring_transaction", {
+	id: text("id").primaryKey(),
+	amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+	frequency: frequencyEnum("frequency").notNull(),
+	nextDueDate: timestamp("next_due_date").notNull(),
+	description: text("description"),
+
+	userId: text("user_id")
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
+	categoryId: text("category_id").references(() => categories.id),
+	accountId: text("account_id").references(() => account.id),
+
+	createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const schema = {
+	user,
+	account,
+	session,
+	verification,
+	budgets,
+	categories,
+	transactions,
+	recurringTransaction,
+};
