@@ -9,7 +9,7 @@ import SpentThisMonth from "@/app/components/dashboard/SpentThisMonth";
 import RecentTransactions from "@/app/components/dashboard/RecentTransactions";
 import BudgetCard from "@/app/components/dashboard/BudgetCard";
 import UpcomingTransactions from "@/app/components/dashboard/UpcomingTransactions";
-import IncomeCard from "@/app/components/dashboard/IncomeCard";
+import IncomeExpensesCard from "@/app/components/dashboard/IncomeExpensesCard";
 
 export const metadata: Metadata = {
 	title: "Home | Budget Wise",
@@ -29,15 +29,15 @@ const Dashboard = async () => {
 
 			<main className="space-y-4">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+					<SpentThisMonth />
+				</div>
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 					<BudgetCard leftToSpend={127} />
-					<SpentThisMonth spentAmount={100} />
+					<IncomeExpensesCard />
 				</div>
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 					<UpcomingTransactions />
 					<RecentTransactions />
-				</div>
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-					<IncomeCard />
 				</div>
 			</main>
 		</PageContainer>

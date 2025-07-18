@@ -12,6 +12,8 @@ import Link from "next/link";
 import React from "react";
 
 const BudgetCard = ({ leftToSpend = 0 }: { leftToSpend: number }) => {
+	const overBudget: boolean = false;
+
 	return (
 		<Card>
 			<CardHeader>
@@ -29,7 +31,11 @@ const BudgetCard = ({ leftToSpend = 0 }: { leftToSpend: number }) => {
 					<h2 className="text-card-foreground/75">Left to Spend</h2>
 					<p className="text-3xl font-bold">{formatCurrency(leftToSpend)}</p>
 					<div className="w-full h-3 bg-accent rounded-full overflow-hidden">
-						<div className="h-full w-6/12 bg-primary rounded-full"></div>
+						<div
+							className={`h-full w-6/12 ${
+								overBudget ? "bg-destructive" : "bg-success"
+							} rounded-full`}
+						></div>
 					</div>
 				</div>
 				<div className="w-full space-y-4">

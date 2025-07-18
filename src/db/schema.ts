@@ -94,7 +94,7 @@ export const budgets = pgTable("budgets", {
 	updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-export const categories = pgTable("expense_categories", {
+export const categories = pgTable("categories", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
 	icon: text("icon"), // optional

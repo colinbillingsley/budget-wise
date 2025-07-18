@@ -25,6 +25,7 @@
 	--color-input: var(--input);
 	--color-border: var(--border);
 	--color-destructive: var(--destructive);
+	--color-success: var(--success);
 	--color-accent-foreground: var(--accent-foreground);
 	--color-accent: var(--accent);
 	--color-muted-foreground: var(--muted-foreground);
@@ -77,6 +78,7 @@
 	--accent-foreground: oklch(0.25 0 0);
 
 	--destructive: oklch(0.65 0.25 27);
+	--success: oklch(70.99% 0.22596 144.614);
 	--border: oklch(0.9 0 0);
 	--input: oklch(0.9 0 0);
 	--ring: oklch(0.75 0 0);
@@ -114,6 +116,7 @@
 	--accent-foreground: oklch(0.95 0.01 250);
 
 	--destructive: oklch(0.65 0.25 27);
+	--success: oklch(70.99% 0.22596 144.614);
 	--border: oklch(0.25 0 0);
 	--input: oklch(0.25 0 0);
 	--ring: oklch(0.78 0.28 142);
@@ -135,10 +138,10 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+	* {
+		@apply border-border outline-ring/50;
 	}
-  body {
-    @apply bg-background text-foreground;
+	body {
+		@apply bg-background text-foreground;
 	}
 }
